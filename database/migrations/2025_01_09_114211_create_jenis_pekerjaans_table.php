@@ -15,10 +15,9 @@ return new class extends Migration
     {
         Schema::create('jenis_pekerjaans', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_user');
-            $table->string('jenis');
+            $table->string('jenis_pekerjaan');
             $table->timestamps();
-            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
+
         });
     }
 

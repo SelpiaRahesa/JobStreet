@@ -59,7 +59,7 @@ class bidangController extends Controller
         return view('admin.bidang.edit', compact('bidang'));
 
         $slider->save();
-        return redirect()->route('dataGuru.index');
+        return redirect()->route('bidang.index');
     }
 
     /**

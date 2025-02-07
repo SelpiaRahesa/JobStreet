@@ -36,7 +36,6 @@
               <img src="{{asset('assets/frontend/motivation/images/img_1_sq.jpg')}}" alt="Image" class="img-fluid">
             </a>
             <div>
-              <span class="date">Apr. 14th, 2022 &bullet; <a href="#">Business</a></span>
               <h2>Thought you loved Python? Wait until you meet Rust</h2>
               <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde, nobis ea quis inventore vel voluptas.</p>
               <p><a href="{{url('detailMotivation')}}" class="btn btn-sm btn-outline-primary">Read More</a></p>
@@ -48,7 +47,6 @@
               <img src="{{asset('assets/frontend/motivation/images/img_2_sq.jpg')}}" alt="Image" class="img-fluid">
             </a>
             <div>
-              <span class="date">Apr. 14th, 2022 &bullet; <a href="#">Business</a></span>
               <h2>Thought you loved Python? Wait until you meet Rust</h2>
               <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde, nobis ea quis inventore vel voluptas.</p>
               <p><a href="{{url('detailMotivation')}}" class="btn btn-sm btn-outline-primary">Read More</a></p>
@@ -60,7 +58,6 @@
               <img src="{{asset('assets/frontend/motivation/images/img_3_sq.jpg')}}" alt="Image" class="img-fluid">
             </a>
             <div>
-              <span class="date">Apr. 14th, 2022 &bullet; <a href="#">Business</a></span>
               <h2>Thought you loved Python? Wait until you meet Rust</h2>
               <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde, nobis ea quis inventore vel voluptas.</p>
               <p><a href="{{url('detailMotivation')}}" class="btn btn-sm btn-outline-primary">Read More</a></p>
@@ -72,7 +69,6 @@
               <img src="{{asset('assets/frontend/motivation/images/img_4_sq.jpg')}}" alt="Image" class="img-fluid">
             </a>
             <div>
-              <span class="date">Apr. 14th, 2022 &bullet; <a href="#">Business</a></span>
               <h2>Thought you loved Python? Wait until you meet Rust</h2>
               <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde, nobis ea quis inventore vel voluptas.</p>
               <p><a href="{{url('detailMotivation')}}" class="btn btn-sm btn-outline-primary">Read More</a></p>
@@ -84,7 +80,6 @@
               <img src="{{asset('assets/frontend/motivation/images/img_5_sq.jpg')}}" alt="Image" class="img-fluid">
             </a>
             <div>
-              <span class="date">Apr. 14th, 2022 &bullet; <a href="#">Business</a></span>
               <h2>Thought you loved Python? Wait until you meet Rust</h2>
               <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde, nobis ea quis inventore vel voluptas.</p>
               <p><a href="{{url('detailMotivation')}}" class="btn btn-sm btn-outline-primary">Read More</a></p>

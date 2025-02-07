@@ -12,7 +12,18 @@
     <!-- ===============================================-->
     <title>Jobstreet</title>
 
+        <link rel="manifest" href="site.webmanifest">
+        <link rel="shortcut icon" type="image/x-icon" href="{{asset('assets/frontend/job/img/favicon.ico')}}">
 
+        <link rel="stylesheet" href="{{asset('assets/frontend/job/css/style.css')}}">
+         <!-- CSS Files -->
+    <link rel="stylesheet" href="{{asset('assets/frontend/job/css/animate-3.7.0.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/frontend/job/css/font-awesome-4.7.0.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/frontend/job/fonts/flat-icon/flaticon.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/frontend/job/css/bootstrap-4.1.3.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/frontend/job/css/owl-carousel.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/frontend/job/css/nice-select.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/frontend/job/css/style.css')}}">
     <!-- ===============================================-->
     <!--    Favicons-->
     <!-- ===============================================-->
@@ -41,6 +52,7 @@
     <!--    Stylesheets-->
     <!-- ===============================================-->
     <link href="{{asset('assets/frontend/css/theme.css')}}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
   </head>
 
@@ -63,11 +75,14 @@
     <!-- ===============================================-->
 
 
+        <!-- CSS Files Job -->
+
 
 
     <!-- ===============================================-->
     <!--    JavaScripts-->
     <!-- ===============================================-->
+
 
     <script src="{{asset('assets/frontend/vendors/@popperjs/popper.min.js')}}"></script>
     <script src="{{asset('assets/frontend/vendors/bootstrap/bootstrap.min.js')}}"></script>
