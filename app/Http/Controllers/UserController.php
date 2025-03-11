@@ -14,11 +14,26 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $user = User::all();
-        return view('admin.user.index', compact('user'));
+    public function index(Request $request)
+{
+    $query = User::query();
+
+    // Filter berdasarkan nama atau email
+    if ($request->has('search')) {
+        $query->where('name', 'like', '%' . $request->search . '%')
+              ->orWhere('email', 'like', '%' . $request->search . '%');
     }
+
+    // Filter berdasarkan role
+    if ($request->has('role') && $request->role != '') {
+        $query->where('role', $request->role);
+    }
+
+    $user = $query->paginate(10); // Pagination 10 data per halaman
+
+    return view('admin.user.index', compact('user'));
+}
+
 
     /**
      * Show the form for creating a new resource.
@@ -36,23 +51,20 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        // $this->validate($request, [
-        //     'name' => 'required|min:2',
-        //     'email' => 'required|unique:users',
-        //     'password' => 'required|min:2',
+    // Misalnya di UserController
+public function store(Request $request)
+{
+    // Menyaring input form dan memeriksa apakah ada yang mengatur role
+    $role = session('user_role', 'pelamar'); // Pastikan session ini tidak diatur menjadi 'perusahaan'
 
-        // ]);
+    return User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+        'role' => $role,
+    ]);
+}
 
-        // $user = new User();
-        // $user->name = $request->name;
-        // $user->email = $request -> email;
-        // $user->password = Hash::make($request->password);
-        // $user->isAdmin = $request->isAdmin;
-        // $user->save();
-        // return redirect()->route('user.index');
-    }
 
     /**
      * Display the specified resource.

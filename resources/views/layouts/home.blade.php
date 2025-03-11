@@ -10,7 +10,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Jobstreet</title>
+    <title>Jobship</title>
 
         <link rel="manifest" href="site.webmanifest">
         <link rel="shortcut icon" type="image/x-icon" href="{{asset('assets/frontend/job/img/favicon.ico')}}">

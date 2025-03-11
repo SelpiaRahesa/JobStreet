@@ -13,18 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('pemberi_kerjas', function (Blueprint $table) {
+        Schema::create('perusahaans', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_user');
+            // $table->unsignedBigInteger('id_user');
             $table->string('nama_perusahaan');
-            $table->unsignedBigInteger('id_bidang');
             $table->string('email');
             $table->integer('telepon');
             $table->string('alamat');
             $table->string('image');
             $table->timestamps();
-            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('id_bidang')->references('id')->on('bidangs')->onDelete('cascade');
+            // $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
+
         });
     }
 

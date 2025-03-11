@@ -22,6 +22,13 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item menu-open"> <a href="{{ route('perusahaan.index') }}" class="nav-link active"> <i
+                            class="nav-icon bi bi-person-vcard-fill"></i>
+                        <p>
+                           Employe Management
+                        </p>
+                    </a>
+                </li>
                 <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-table"></i>
                         <p>
                             Data Management

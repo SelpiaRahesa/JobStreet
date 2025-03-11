@@ -68,7 +68,17 @@
     <div class="container mt-5">
         <div class="form-container">
             <h3 class="text-center mb-4">LAMAR PEKERJAAN</h3>
-
+                <!-- Tombol Logout -->
+            @auth
+            <div class="text-end mb-4">
+                <button type="button" class="btn-logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    Logout
+                </button>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                </form>
+            </div>
+        @endauth
             <div class="step-indicator">
                 <div class="step active" id="step1-indicator">
                     <i class="fa fa-user"></i> Data Diri
@@ -90,12 +100,28 @@
                         <input type="text" class="form-control" name="full_name" placeholder="Masukkan Nama Lengkap" required>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Email</label>
-                        <input type="email" class="form-control" name="email" placeholder="Masukkan Email" required>
+                        <label class="form-label">Jenis Kelamin</label>
+                        <select class="form-select" name="job_category" required>
+                            <option value="" selected>Pilih Jenis Kelamin</option>
+                            <option value="Marketing">Perempuan</option>
+                            <option value="Engineering">Laki-Laki</option>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Nomor Telepon</label>
                         <input type="text" class="form-control" name="phone" placeholder="Masukkan Nomor Telepon" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label">Alamat</label>
+                        <textarea class="form-control" name="job_description" rows="4" placeholder="Masukan Alamat" required></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label">Kelebihan</label>
+                        <textarea class="form-control" name="qualifications" rows="3" placeholder="Sebutkan Kelebihhan Anda" required></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label">Pengalaman</label>
+                        <textarea class="form-control" name="qualifications" rows="3" placeholder="Sebutkan Pengalaman Anda" required></textarea>
                     </div>
                     <div class="text-end">
                         <button type="button" class="btn-next" onclick="nextStep(2)">Lanjut</button>

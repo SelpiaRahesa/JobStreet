@@ -18,8 +18,9 @@ class IsAdmin
     public function handle(Request $request, Closure $next)
     {
         if (auth()->user()->role !== 'admin') {
-            abort(403);
+            abort(403); // Bukan admin, munculkan error 403
         }
         return $next($request);
     }
+
 }

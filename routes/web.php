@@ -17,25 +17,23 @@ use App\Http\Middleware\IsAdmin;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/motivation', function () {
-    return view('motivation');
-});
-Route::get('/detailMotivation', function () {
-    return view('detailMotivation');
-});
-Route::get('/job', function () {
-    return view('job');
-});
-Route::get('/detailJob', function () {
-    return view('detailJob');
-});
-Route::get('/jobPost', function () {
-    return view('jobPost');
-});
-Route::get('/pelamar', function () {
-    return view('pelamar');
+// Route user (Frontend)
+Route::get('motivation',[App\Http\Controllers\FrontController::class,'motivation'])->name('motivation');
+Route::get('detailMotivation',[App\Http\Controllers\FrontController::class,'detailMotivation'])->name('detailMotivation');
+Route::get('job',[App\Http\Controllers\FrontController::class,'job'])->name('job');
+Route::get('detailJob',[App\Http\Controllers\FrontController::class,'detailJob'])->name('detailJob');
+
+// Perusahaan hanya bisa akses jobPost
+Route::middleware(['auth', 'role:perusahaan'])->group(function () {
+    Route::get('/jobPost', [App\Http\Controllers\FrontController::class, 'jobPost'])->name('jobPost');
+    Route::post('/user/perusahaan/store', [App\Http\Controllers\PerusahaanController::class, 'store'])->name('user.perusahaan.store');
+    Route::post('/user/job/store', [App\Http\Controllers\PerusahaanController::class, 'store'])->name('user.job.store');
 });
 
+// Pelamar hanya bisa akses pelamar
+Route::middleware(['auth', 'role:pelamar'])->group(function () {
+    Route::get('/pelamar', [App\Http\Controllers\FrontController::class, 'pelamar'])->name('pelamar');
+});
 
 Auth::routes(); // Menonaktifkan route registrasi
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -50,5 +48,5 @@ Route::resource('motivasi', App\Http\Controllers\MotivasiController::class);
 Route::resource('bidang', App\Http\Controllers\BidangController::class);
 Route::resource('lokasi', App\Http\Controllers\LokasiController::class);
 Route::resource('jenis_pekerjaan', App\Http\Controllers\Jenis_pekerjaanController::class);
+Route::resource('perusahaan', App\Http\Controllers\PerusahaanController::class);
 });
-

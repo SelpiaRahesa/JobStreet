@@ -26,6 +26,7 @@
                 <p class="register-box-msg">Register a new membership</p>
                 <form action="{{ route('register') }}" method="POST">
                     @csrf
+                    <input type="hidden" name="role" id="role" value="pelamar"> <!-- Default pelamar -->
                     <div class="input-group mb-1">
                         <div class="form-floating">
                             <input id="registerFullName" type="text"
@@ -89,6 +90,7 @@
                         </div> <!-- /.col -->
                         <!-- /.col -->
                     </div>
+
                     <div class="col-12 mb-3">
                         <div class="d-grid">
                             <button type="submit" class="btn btn-primary">Register</button>
@@ -125,6 +127,15 @@
             }
         });
     </script> <!--end::OverlayScrollbars Configure--> <!--end::Script-->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        if (window.location.pathname.includes("jobPost")) {
+            document.getElementById("role").value = "perusahaan";
+        }
+    });
+</script>
+
+
 </body><!--end::Body-->
 
 </html>

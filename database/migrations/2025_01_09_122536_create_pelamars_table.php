@@ -23,8 +23,11 @@ return new class extends Migration
             $table->string('pendidikan_terakhir');
             $table->text('kelebihan');
             $table->text('pengalaman');
+            $table->string('posisi');
+            $table->unsignedBigInteger('id_bidang');
             $table->timestamps();
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('id_bidang')->references('id')->on('bidangs')->onDelete('cascade');
         });
     }
 
