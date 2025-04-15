@@ -34,28 +34,29 @@ class PerusahaanController extends Controller
      */
         public function store(Request $request)
     {
-        // ADD perusahaan
-        $this->validate( $request, [
-            'nama_perusahaan'=>'required',
-            'email'=>'required',
-            'telepon'=>'required',
-            'alamat'=>'required',
-            'image'=>'required',
-        ]);
+            // ADD perusahaan
+            $this->validate( $request, [
+                'nama_perusahaan'=>'required',
+                'email'=>'required',
+                'telepon'=>'required',
+                'alamat'=>'required',
+                'image'=>'required',
+            ]);
 
-        $perusahaan = new Perusahaan();
-        // $perusahaan->id_user = $request->id_user;
-        $perusahaan->nama_perusahaan =$request->nama_perusahaan;
-        $perusahaan->email =$request->email;
-        $perusahaan->telepon =$request->telepon;
-        $perusahaan->alamat =$request->alamat;
-         // upload image
-         $image = $request->file('image');
-         $image->storeAs('public/perusahaans', $image->hashName());
-         $perusahaan->image = $image->hashName();
-         $perusahaan->save();
-         Alert::success('Success', 'Data Added Successfully')->autoClose(1000);
-         return redirect()->route('jobPost');
+            $perusahaan = new Perusahaan();
+            // $perusahaan->id_user = $request->id_user;
+            $perusahaan->nama_perusahaan =$request->nama_perusahaan;
+            $perusahaan->email =$request->email;
+            $perusahaan->telepon =$request->telepon;
+            $perusahaan->alamat =$request->alamat;
+            // upload image
+            $image = $request->file('image');
+            $image->storeAs('public/perusahaans', $image->hashName());
+            $perusahaan->image = $image->hashName();
+            $perusahaan->save();
+            Alert::success('Success', 'Data Added Successfully')->autoClose(1000);
+    return redirect()->route('jobPost');
+
 
     }
 

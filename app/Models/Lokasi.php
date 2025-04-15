@@ -10,5 +10,10 @@ class Lokasi extends Model
     use HasFactory;
     protected $fillable = ['id','lokasi'];
     protected $visible = ['id','lokasi'];
-}
 
+    public function Job_posting()
+{
+    return $this->hasMany(Job_posting::class, 'lokasi_id');
+
+}
+}

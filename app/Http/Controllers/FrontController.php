@@ -3,14 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Motivasi;
 
 class FrontController extends Controller
 {
     public function motivation () {
         return view('motivation');
     }
-    public function detailMotivation () {
-        return view('detailMotivation');
+    public function show($id){
+        $motivasi = Motivasi::findOrFail($id);
+        return view('detailMotivation',compact('motivasi'));
     }
     public function job () {
         return view('job');

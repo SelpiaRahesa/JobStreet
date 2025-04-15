@@ -19,7 +19,7 @@ class JobPostingController extends Controller
     public function index()
     {
         $jobPosting = Job_posting::with(['perusahaan', 'bidang', 'jenisPekerjaan', 'lokasi'])->get();
-        return view('job_postings.index', compact('jobPostings'));
+        return view('admin.job_postings.index', compact('jobPosting'));
     }
 
     /**
@@ -27,15 +27,15 @@ class JobPostingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        $perusahaans = Perusahaan::all();
-        $bidang = Bidang::all();
-        $jenisPekerjaan = Jenis_pekerjaan::all();
-        $lokasis = Lokasi::all();
+    public function createStep2()
+{
+    $bidangs = Bidang::all();
+    $jenisPekerjaan = Jenis_pekerjaan::all();
+    $lokasis = Lokasi::all();
 
-        return view('job_postings.create', compact('perusahaans', 'bidangs', 'jenis_pekerjaans', 'lokasis'));
-    }
+    return view('job_postings.step2', compact('bidangs', 'jenisPekerjaan', 'lokasis'));
+}
+
 
     /**
      * Store a newly created resource in storage.
@@ -44,33 +44,32 @@ class JobPostingController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        $request->validate([
-            'id_perusahaan' => 'required|exists:perusahaans,id',
-            'judul' => 'required|string|max:255',
-            'id_bidang' => 'required|exists:bidangs,id',
-            'id_jenis' => 'required|exists:jenis_pekerjaans,id',
-            'rentang_gaji' => 'required|integer',
-            'id_lokasi' => 'required|exists:lokasis,id',
-            'deskripsi' => 'required|string',
-            'kualifikasi' => 'required|string',
-        ]);
+{
+    $request->validate([
+        'id_perusahaan' => 'required|exists:perusahaans,id',
+        'judul' => 'required|string|max:255',
+        'id_bidang' => 'required|exists:bidangs,id',
+        'id_jenis' => 'required|exists:jenis_pekerjaans,id',
+        'rentang_gaji' => 'required|integer',
+        'id_lokasi' => 'required|exists:lokasis,id',
+        'deskripsi' => 'required|string',
+        'kualifikasi' => 'required|string',
+    ]);
 
-        $jobPosting = new Job_posting();
-        $jobPosting->id_perusahaan = $request->id_perusahaan;
-        $jobPosting->judul = $request->judul;
-        $jobPosting->id_bidang = $request->id_bidang;
-        $jobPosting->id_jenis = $request->id_jenis;
-        $jobPosting->rentang_gaji = $request->rentang_gaji;
-        $jobPosting->id_lokasi = $request->id_lokasi;
-        $jobPosting->deskripsi = $request->deskripsi;
-        $jobPosting->kualifikasi = $request->kualifikasi;
-        $jobPosting->status = false; // Default status ke false (belum diterima)
-        $jobPosting->save();
+    $jobPosting = new Job_posting();
+    $jobPosting->id_perusahaan = $request->id_perusahaan;
+    $jobPosting->judul = $request->judul;
+    $jobPosting->id_bidang = $request->id_bidang;
+    $jobPosting->id_jenis = $request->id_jenis;
+    $jobPosting->rentang_gaji = $request->rentang_gaji;
+    $jobPosting->id_lokasi = $request->id_lokasi;
+    $jobPosting->deskripsi = $request->deskripsi;
+    $jobPosting->kualifikasi = $request->kualifikasi;
+    $jobPosting->status = false; // Default status ke false (belum diterima)
+    $jobPosting->save();
 
-        return redirect()->route('job_postings.index')->with('success', 'Lowongan berhasil ditambahkan!');
-    }
-
+    return redirect()->route('admin.jobPost.index');
+}
     /**
      * Display the specified resource.
      *

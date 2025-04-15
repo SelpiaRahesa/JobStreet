@@ -42,7 +42,7 @@
                                                     </a>
                                                     {{-- <a href="{{ route('lokasi.destroy', $data->id) }}" class="btn  btn-sm btn-danger" data-confirm-delete="true">Delete</a> --}}
                                                     <a href="{{ route('lokasi.destroy', $data->id) }}"
-                                                        class="btn btn-sm btn-  danger" data-confirm-delete="true">
+                                                        class="btn btn-sm btn-danger" data-confirm-delete="true">
                                                         delete
                                                     </a>
                                                 </form>

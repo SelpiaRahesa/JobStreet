@@ -2,7 +2,7 @@
     <div class="sidebar-brand"> <!--begin::Brand Link--> <a href="{{ url('home') }}" class="brand-link">
             <!--begin::Brand Image--> <img src="{{ asset('assets/backend/assets/img/AdminLTELogo.png') }}"
                 alt="AdminLTE Logo" class="brand-image opacity-75 shadow"> <!--end::Brand Image-->
-            <!--begin::Brand Text--> <span class="brand-text fw-light">JobShip</span> <!--end::Brand Text--> </a>
+            <!--begin::Brand Text--> <span class="brand-text fw-light">Company</span> <!--end::Brand Text--> </a>
         <!--end::Brand Link-->
     </div> <!--end::Sidebar Brand--> <!--begin::Sidebar Wrapper-->
     <div class="sidebar-wrapper">
@@ -15,7 +15,7 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item menu-open"> <a href="{{ route('user.index') }}" class="nav-link active"> <i
+                {{-- <li class="nav-item menu-open"> <a href="{{ route('user.index') }}" class="nav-link active"> <i
                             class="nav-icon bi bi-person-vcard-fill"></i>
                         <p>
                            User Management
@@ -66,7 +66,7 @@
                             </a> </li>
                     </ul>
 
-                </li>
+                </li> --}}
             </ul> <!--end::Sidebar Menu-->
         </nav>
     </div> <!--end::Sidebar Wrapper-->

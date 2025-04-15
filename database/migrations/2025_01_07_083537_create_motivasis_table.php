@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('motivasis', function (Blueprint $table) {
             $table->id();
             $table->String('judul');
-            $table->String('deskripsi');
+            $table->text('deskripsi');
             $table->String('image');
             $table->timestamps();
         });

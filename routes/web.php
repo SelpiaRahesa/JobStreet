@@ -14,12 +14,13 @@ use App\Http\Middleware\IsAdmin;
 |
 */
 
+
 Route::get('/', function () {
     return view('welcome');
 });
 // Route user (Frontend)
 Route::get('motivation',[App\Http\Controllers\FrontController::class,'motivation'])->name('motivation');
-Route::get('detailMotivation',[App\Http\Controllers\FrontController::class,'detailMotivation'])->name('detailMotivation');
+Route::get('/detailMotivation/{id}', [App\Http\Controllers\FrontController::class,'show'])->name('berita');
 Route::get('job',[App\Http\Controllers\FrontController::class,'job'])->name('job');
 Route::get('detailJob',[App\Http\Controllers\FrontController::class,'detailJob'])->name('detailJob');
 
@@ -27,7 +28,7 @@ Route::get('detailJob',[App\Http\Controllers\FrontController::class,'detailJob']
 Route::middleware(['auth', 'role:perusahaan'])->group(function () {
     Route::get('/jobPost', [App\Http\Controllers\FrontController::class, 'jobPost'])->name('jobPost');
     Route::post('/user/perusahaan/store', [App\Http\Controllers\PerusahaanController::class, 'store'])->name('user.perusahaan.store');
-    Route::post('/user/job/store', [App\Http\Controllers\PerusahaanController::class, 'store'])->name('user.job.store');
+    Route::post('/user/post/store', [App\Http\Controllers\JobPostingController::class, 'store'])->name('user.post.store');
 });
 
 // Pelamar hanya bisa akses pelamar
@@ -49,4 +50,7 @@ Route::resource('bidang', App\Http\Controllers\BidangController::class);
 Route::resource('lokasi', App\Http\Controllers\LokasiController::class);
 Route::resource('jenis_pekerjaan', App\Http\Controllers\Jenis_pekerjaanController::class);
 Route::resource('perusahaan', App\Http\Controllers\PerusahaanController::class);
+Route::resource('job_postings', App\Http\Controllers\JobPostingController::class);
 });
+
+

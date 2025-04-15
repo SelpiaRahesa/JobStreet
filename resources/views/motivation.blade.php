@@ -1,7 +1,41 @@
 @extends('layouts.home')
 @section('content')
 
-<section>
+<style>
+    .blog-entry {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding-bottom: 15px;
+      margin-bottom: 15px;
+    }
+    .blog-entry img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    .blog-entry h2 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+    .blog-entry .news-text {
+      font-size: 0.9rem;
+      color: #555;
+    }
+    @media (max-width: 768px) {
+      .blog-entry {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .blog-entry img {
+        width: 100%;
+        height: auto;
+      }
+    }
+  </style>
+
+{{-- <section>
 <div class="section sec-halfs py-0">
     <div class="container">
         <div class="half-content d-lg-flex align-items-stretch">
@@ -25,68 +59,32 @@
         </div>
     </div>
 </div>
-</section>
-  <div class="section search-result-wrap">
-    <div class="container">
-
-      <div class="row posts-entry">
-        <div class="col-lg-8">
-          <div class="blog-entry d-flex blog-entry-search-item">
-            <a href="{{url('detailMotivation')}}" class="img-link me-4">
-              <img src="{{asset('assets/frontend/motivation/images/img_1_sq.jpg')}}" alt="Image" class="img-fluid">
-            </a>
-            <div>
-              <h2>Thought you loved Python? Wait until you meet Rust</h2>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde, nobis ea quis inventore vel voluptas.</p>
-              <p><a href="{{url('detailMotivation')}}" class="btn btn-sm btn-outline-primary">Read More</a></p>
+</section> --}}
+<section>
+    <div class="section search-result-wrap">
+      <div class="container">
+        <div class="row posts-entry">
+          <div class="col-lg-8">
+              @php $motivasi = App\Models\Motivasi::orderBy('id', 'asc')->paginate(8); @endphp
+              @foreach($motivasi as $data)
+            <div class="blog-entry">
+              <a href="{{url('detailMotivation', $data->id)}}" class="img-link">
+                <img src="{{asset('/storage/motivasis/' . $data->image)}}" alt="Image" class="img-fluid">
+              </a>
+              <div>
+                <h2>{{ $data->judul }}</h2>
+                <p class="news-text">
+                  <span class="message-preview" onclick="toggleMessage(this)" data-full-message="{{ $data->deskripsi }}">
+                    {{ \Illuminate\Support\Str::limit($data->deskripsi, 50, '...') }}
+                  </span>
+                </p>
+                <p><a href="{{url('detailMotivation',  $data->id)}}" class="btn btn-sm btn-outline-primary">Read More</a></p>
+              </div>
             </div>
-          </div>
-
-          <div class="blog-entry d-flex blog-entry-search-item">
-            <a href="{{url('detailMotivation')}}" class="img-link me-4">
-              <img src="{{asset('assets/frontend/motivation/images/img_2_sq.jpg')}}" alt="Image" class="img-fluid">
-            </a>
-            <div>
-              <h2>Thought you loved Python? Wait until you meet Rust</h2>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde, nobis ea quis inventore vel voluptas.</p>
-              <p><a href="{{url('detailMotivation')}}" class="btn btn-sm btn-outline-primary">Read More</a></p>
-            </div>
-          </div>
-
-          <div class="blog-entry d-flex blog-entry-search-item">
-            <a href="{{url('detailMotivation')}}" class="img-link me-4">
-              <img src="{{asset('assets/frontend/motivation/images/img_3_sq.jpg')}}" alt="Image" class="img-fluid">
-            </a>
-            <div>
-              <h2>Thought you loved Python? Wait until you meet Rust</h2>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde, nobis ea quis inventore vel voluptas.</p>
-              <p><a href="{{url('detailMotivation')}}" class="btn btn-sm btn-outline-primary">Read More</a></p>
-            </div>
-          </div>
-
-          <div class="blog-entry d-flex blog-entry-search-item">
-            <a href="{{url('detailMotivation')}}" class="img-link me-4">
-              <img src="{{asset('assets/frontend/motivation/images/img_4_sq.jpg')}}" alt="Image" class="img-fluid">
-            </a>
-            <div>
-              <h2>Thought you loved Python? Wait until you meet Rust</h2>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde, nobis ea quis inventore vel voluptas.</p>
-              <p><a href="{{url('detailMotivation')}}" class="btn btn-sm btn-outline-primary">Read More</a></p>
-            </div>
-          </div>
-
-          <div class="blog-entry d-flex blog-entry-search-item">
-            <a href="{{url('detailMotivation')}}" class="img-link me-4">
-              <img src="{{asset('assets/frontend/motivation/images/img_5_sq.jpg')}}" alt="Image" class="img-fluid">
-            </a>
-            <div>
-              <h2>Thought you loved Python? Wait until you meet Rust</h2>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde, nobis ea quis inventore vel voluptas.</p>
-              <p><a href="{{url('detailMotivation')}}" class="btn btn-sm btn-outline-primary">Read More</a></p>
-            </div>
+             @endforeach
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 @endsection

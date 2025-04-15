@@ -19,7 +19,7 @@
     <div class="register-box"> <!-- /.register-logo -->
         <div class="card card-outline card-primary">
             <div class="card-header"> <a href="../index2.html" class="link-dark text-center link-offset-2 link-opacity-100 link-opacity-50-hover">
-                    <h1 class="mb-0"> <b>Job</b>Street
+                    <h1 class="mb-0"> <b>Job</b>Ship
                     </h1>
                 </a> </div>
             <div class="card-body register-card-body">

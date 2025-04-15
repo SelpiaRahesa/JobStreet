@@ -3,18 +3,11 @@
     <style>
         .form-container {
             max-width: 2000px;
-            /* Lebarkan form */
             margin: auto;
             padding: 30px;
-            /* Tambah padding agar lebih lega */
             background: #fff;
             border-radius: 12px;
             box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
-        }
-
-        .form-select {
-            height: 55px;
-            /* Tambahkan tinggi agar tidak kepotong */
         }
 
         .step-indicator {
@@ -102,71 +95,60 @@
             <div class="form-container">
                 <h3 class="text-center mb-4">POST A JOB</h3>
 
-                <!-- Tombol Logout -->
-                @auth
-                    <div class="text-end mb-4">
-                        <button type="button" class="btn-logout"
-                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            Logout
-                        </button>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
-                    </div>
-                @endauth
-
                 <div class="step-indicator">
                     <div class="step active" id="step1-indicator">
-                        <i class="fa fa-building"></i> Info Perusahaan
+                        <i class="fas fa-building"></i> Info Perusahaan
                     </div>
                     <div class="step" id="step2-indicator">
-                        <i class="fa fa-briefcase"></i> Detail Pekerjaan
+                        <i class="fas fa-briefcase"></i> Detail Pekerjaan
                     </div>
                     <div class="step" id="step3-indicator">
-                        <i class="fa fa-check-circle"></i> Konfirmasi
+                        <i class="fas fa-check-circle"></i> Konfirmasi
                     </div>
                 </div>
 
-                <form action="{{ route('user.perusahaan.store') }}" method="POST" enctype="multipart/form-data">
+                <form id="form1" class="step-form" action="{{ route('user.perusahaan.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
+                    <!-- STEP 1 -->
                     <div id="step1">
-                        <div class="mb-4">
+                        <div class="mb-3">
                             <input type="text" class="form-control @error('nama_perusahaan') is-invalid @enderror"
-                                name="nama_perusahaan" placeholder="Nama Perusahaan" />
+                                name="nama_perusahaan" placeholder="Nama Perusahaan" required />
                             @error('nama_perusahaan')
                                 <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $perusahaan }}</strong>
+                                    <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
                         </div>
-                        <div class="mb-4">
+                        <div class="mb-3">
                             <input type="email" class="form-control @error('email') is-invalid @enderror" name="email"
-                                placeholder="Email" />
+                                placeholder="Email" required />
                             @error('email')
                                 <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $perusahaan }}</strong>
+                                    <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
                         </div>
-                        <div class="mb-4">
+                        <div class="mb-3">
                             <input type="number" class="form-control @error('telepon') is-invalid @enderror" name="telepon"
-                                placeholder="telepon" />
+                                placeholder="telepon" required />
                             @error('telepon')
                                 <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $perusahaan }}</strong>
+                                    <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
                         </div>
-                        <div class="mb-4">
+                        <div class="mb-3">
                             <textarea name="alamat" class="form-control @error('alamat') is-invalid @enderror" placeholder="Alamat" required></textarea>
                             @error('alamat')
                                 <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $perusahaan }}</strong>
+                                    <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
                         </div>
-                        <div class="mb-4">
-                            <input type="file" name="image" class="form-control @error('image') is-invalid @enderror" accept="image/*" required>
+                        <div class="mb-3">
+                            <input type="file" name="image" class="form-control @error('image') is-invalid @enderror"
+                                accept="image/*" required>
                             @error('image')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -174,84 +156,135 @@
                             @enderror
                         </div>
                         <div class="text-end">
-                            {{-- <button type="button" class="btn-next" onclick="nextStep(2)">Lanjut</button>
-                        </div>
-                    </div>
-                </form> --}}
-                {{-- <form action="{{ route('user.job.store') }}" method="POST">
-                    @csrf
-                    <div id="step2" class="hidden">
-                        <div class="mb-4">
-                            <label class="form-label">Posisi Pekerjaan</label>
-                            <input type="text" class="form-control @error('judul') is-invalid @enderror"
-                            name="judul" placeholder="Posisi yang di buka" />
-                        @error('judul')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $perusahaan }}</strong>
-                            </span>
-                        @enderror
-                        </div>
-                        <div class="mb-4">
-                            <label class="form-label">Kategori Pekerjaan</label>
-                            <select class="form-select" name="job_category" required>
-                                <option value="" selected>Pilih Kategori</option>
-                                <option value="IT">IT</option>
-                                <option value="Finance">Finance</option>
-                                <option value="Marketing">Marketing</option>
-                                <option value="Engineering">Engineering</option>
-                            </select>
-                        </div>
-                        <div class="mb-4">
-                            <label class="form-label">Tipe Pekerjaan</label>
-                            <select class="form-select" name="job_type" required>
-                                <option value="" selected>Pilih Tipe</option>
-                                <option value="Full Time">Full Time</option>
-                                <option value="Part Time">Part Time</option>
-                                <option value="Freelance">Freelance</option>
-                            </select>
-                        </div>
-                        <div class="mb-4">
-                            <label class="form-label">Gaji (Rp)</label>
-                            <input type="number" class="form-control" name="salary" placeholder="Gaji yang ditawarkan"
-                                required>
-                        </div>
-                        <div class="mb-4">
-                            <label class="form-label">Lokasi</label>
-                            <input type="text" class="form-control" name="company_email"
-                                placeholder="Masukkan Email Perusahaan" required>
-                        </div>
-                        <div class="text-end">
-                            <button type="button" class="btn-next" onclick="nextStep(3)">Lanjut</button>
-                        </div>
-                    </div>
-                    <div id="step3" class="hidden">
-                        <div class="mb-4">
-                            <label class="form-label">Deskripsi Pekerjaan</label>
-                            <textarea class="form-control" name="job_description" rows="4" placeholder="Deskripsikan pekerjaan..."
-                                required></textarea>
-                        </div>
-                        <div class="mb-4">
-                            <label class="form-label">Kualifikasi</label>
-                            <textarea class="form-control" name="qualifications" rows="3"
-                                placeholder="Sebutkan kualifikasi yang dibutuhkan..." required></textarea>
-                        </div> --}}
-                        <div class="text-end">
-                            <button type="submit" class="btn-next">Submit</button>
+                            <button type="button" class="btn-next" onclick="submitStep1()">Lanjut</button>
                         </div>
                     </div>
                 </form>
+
+                <form id="form2" class="step-form hidden" action="{{ route('user.post.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <!-- STEP 2 -->
+                    <div id="step2">
+                        <input type="hidden" name="id_perusahaan" value="{{ session('id_perusahaan') }}">
+
+                        <div class="mb-3">
+                            <input type="text" class="form-control @error('judul') is-invalid @enderror"
+                            name="judul" placeholder="Posisi yang dibutuhkan" required />
+                        @error('judul')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <select class="form-select" name="id_bidang" required>
+                                <option value="">Pilih Bidang</option>
+                                @foreach (App\Models\Bidang::all() as $bidang)
+                                    <option value="{{ $bidang->id }}">{{ $bidang->nama_bidang }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <select class="form-select" name="id_jenis" required>
+                                <option value="">Pilih Tipe Pekerjaan</option>
+                                @foreach (App\Models\Jenis_pekerjaan::all() as $jenis)
+                                    <option value="{{ $jenis->id }}">{{ $jenis->jenis_pekerjaan }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Gaji (Rp)</label>
+                            <input type="text" class="form-control" name="rentang_gaji" placeholder="Gaji yang ditawarkan" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <select class="form-select" name="lokasi" required>
+                                <option value="">Pilih Provinsi</option>
+                                @foreach (App\Models\Lokasi::all() as $data)
+                                    <option value="{{ $data->id }}">{{ $data->lokasi }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="text-end">
+                            <button type="button" class="btn-next" onclick="nextStep(1)">Kembali</button>
+                            <button type="button" class="btn-next" onclick="nextStep(3)">Lanjut</button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 3 -->
+                    <div id="step3">
+                        <div class="mb-4">
+                            <textarea name="deskripsi" class="form-control @error('deskripsi') is-invalid @enderror"
+                                placeholder="Deskripsikan lowongan pekerjaan" required></textarea>
+                            @error('deskripsi')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="mb-4">
+                            <textarea name="kualifikasi" class="form-control @error('kualifikasi') is-invalid @enderror"
+                                placeholder="Masuka kulifikasi berdasarkan standar perusahaan" required></textarea>
+                            @error('alamat')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="text-end">
+                            <button type="button" class="btn-next" onclick="nextStep(2)">Kembali</button>
+                            <button type="submit" class="btn-next" onclick="submitStep()">Submit</button>
+                        </div>
+                    </div>
+                </form>
+
             </div>
         </div>
     </section>
 
     <script>
         function nextStep(step) {
-            document.getElementById("step1").classList.add("hidden");
-            document.getElementById("step2").classList.add("hidden");
-            document.getElementById("step3").classList.add("hidden");
-            document.getElementById("step" + step).classList.remove("hidden");
+            if (step === 1) {
+                document.getElementById('form1').classList.remove('hidden');
+                document.getElementById('form2').classList.add('hidden');
+            } else {
+                document.getElementById('form1').classList.add('hidden');
+                document.getElementById('form2').classList.remove('hidden');
+                document.querySelectorAll('#step2, #step3').forEach(div => div.classList.add('hidden'));
+                document.querySelector(`#step${step}`).classList.remove('hidden');
+            }
+
             document.querySelectorAll(".step").forEach(el => el.classList.remove("active"));
-            document.getElementById("step" + step + "-indicator").classList.add("active");
+            document.querySelector(`#step${step}-indicator`).classList.add("active");
+        }
+
+        function submitStep1() {
+            const form = document.getElementById('form1');
+            const formData = new FormData(form);
+
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.perusahaan_id) {
+                    document.querySelector('input[name="id_perusahaan"]').value = data.perusahaan_id;
+                    nextStep(2);
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                alert("Terjadi kesalahan saat menyimpan. Coba lagi.");
+            });
         }
     </script>
+
 @endsection

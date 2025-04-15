@@ -34,7 +34,6 @@ class lokasiController extends Controller
             'lokasi' => 'required',
 
         ]);
-
         $lokasi = new Lokasi();
         $lokasi->lokasi = $request->lokasi;
         $lokasi->save();
@@ -58,8 +57,8 @@ class lokasiController extends Controller
         $lokasi = lokasi::findOrFail($id);
         return view('admin.lokasi.edit', compact('lokasi'));
 
-        $slider->save();
-        return redirect()->route('dataGuru.index');
+        $lokasi->save();
+        return redirect()->route('lokasi.index');
     }
 
     /**
