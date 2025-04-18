@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Perusahaan;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Perusahaan;
 use App\Models\User;
@@ -96,3 +97,4 @@ class PerusahaanController extends Controller
         return redirect()->route('perusahaan.index');
     }
 }
+

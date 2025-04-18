@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Perusahaan;
 
+use App\Http\Controllers\Controller;
 use App\Models\Job_posting;
 use Illuminate\Http\Request;
 use App\Models\Perusahaan;
@@ -19,7 +20,7 @@ class JobPostingController extends Controller
     public function index()
     {
         $jobPosting = Job_posting::with(['perusahaan', 'bidang', 'jenisPekerjaan', 'lokasi'])->get();
-        return view('admin.jobPost.index', compact('jobPosting'));
+        return view('perusahaan.jobPost.index', compact('jobPosting'));
     }
 
     /**
@@ -33,7 +34,7 @@ class JobPostingController extends Controller
     $jenisPekerjaan = Jenis_pekerjaan::all();
     $lokasis = Lokasi::all();
 
-    return view('admin.jobPost.create', compact('bidangs', 'jenisPekerjaan', 'lokasis'));
+    return view('perusahaan.jobPost.create', compact('bidangs', 'jenisPekerjaan', 'lokasis'));
 }
 
 
@@ -68,7 +69,7 @@ class JobPostingController extends Controller
     $jobPosting->status = false; // Default status ke false (belum diterima)
     $jobPosting->save();
 
-    return redirect()->route('admin.jobPost.index');
+    return redirect()->route('perusahaan.jobPost.index');
 }
     /**
      * Display the specified resource.

@@ -21,29 +21,35 @@
                 </a>
             </li>
             <!--end::Fullscreen Toggle-->
-<!--begin::User Menu Dropdown-->
-<li class="nav-item dropdown user-menu">
-    <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
-        <i class="bi bi-person-circle me-2"></i> Admin
-    </a>
-    <ul class="dropdown-menu dropdown-menu-end w-auto shadow">
-        <li>
-            <a href="{{ route('logout') }}"
-               onclick="event.preventDefault(); document.getElementById('logout-form').submit()"
-               class="dropdown-item d-flex align-items-center">
-                <i class="bi bi-box-arrow-right me-2"></i> Sign out
-            </a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                @csrf
-            </form>
-        </li>
-    </ul>
-</li>
-<!--end::User Menu Dropdown-->
-        
+            <!--begin::User Menu Dropdown-->
+            @php
+                $user = Auth::user();
+                $displayName =
+                    $user->role === 'perusahaan' && $user->perusahaan
+                        ? $user->perusahaan->nama_perusahaan
+                        : $user->name;
+            @endphp
 
 
-
+            <li class="nav-item dropdown user-menu">
+                <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
+                    <i class="bi bi-person-circle me-2"></i>
+                    <span>{{ $displayName }}</span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end w-auto shadow">
+                    <li>
+                        <a href="{{ route('logout') }}"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                            class="dropdown-item d-flex align-items-center">
+                            <i class="bi bi-box-arrow-right me-2"></i> Sign out
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    </li>
+                </ul>
+            </li>
+            <!--end::User Menu Dropdown-->
         </ul>
         <!--end::End Navbar Links-->
     </div>

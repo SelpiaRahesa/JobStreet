@@ -2,7 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Middleware\IsAdmin;
+use App\Http\Middleware\isAdmin;
+use App\Http\Middleware\isPerusahaan;
+// use App\Http\Controllers\Perusahaan\JobPostingController;
+// use App\Http\Controllers\Perusahaan\JobPostingController;
+// use App\Http\Controllers\Perusahaan\PerusahaanController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,22 +29,38 @@ Route::get('/detailMotivation/{id}', [App\Http\Controllers\FrontController::clas
 Route::get('job',[App\Http\Controllers\FrontController::class,'job'])->name('job');
 Route::get('detailJob',[App\Http\Controllers\FrontController::class,'detailJob'])->name('detailJob');
 
-// Perusahaan hanya bisa akses jobPost
-Route::middleware(['auth', 'role:perusahaan'])->group(function () {
-    Route::get('/jobPost', [App\Http\Controllers\FrontController::class, 'jobPost'])->name('jobPost');
-    Route::post('/user/perusahaan/store', [App\Http\Controllers\PerusahaanController::class, 'store'])->name('user.perusahaan.store');
-    Route::post('/user/post/store', [App\Http\Controllers\JobPostingController::class, 'store'])->name('user.post.store');
+Route::group(['prefix' => 'perusahaan', 'middleware' => ['auth', isPerusahaan::class]], function () {
+    // Route::get('', [App\Http\Controllers\Perusahaan\PerusahaanController::class, 'index'])->name('perusahaanindex');
+    Route::resource('jobPost', App\Http\Controllers\Perusahaan\JobPostingController::class, ['as' => 'perusahaan']);
+    Route::resource('perusahaan', App\Http\Controllers\Perusahaan\PerusahaanController::class, ['as' => 'perusahaan']);
+
 });
 
+// Perusahaan hanya bisa akses jobPost
+// Route::middleware(['auth', 'role:perusahaan'])->group(function () {
+//     Route::get('/', function () {
+//         return view('perusahaan.index');
+//     });
+    // Route::get('/jobPost', [App\Http\Controllers\FrontController::class, 'jobPost'])->name('jobPost');
+    // Route::post('/user/perusahaan/store', [App\Http\Controllers\PerusahaanController::class, 'store'])->name('user.perusahaan.store');
+    // Route::post('/user/post/store', [App\Http\Controllers\JobPostingController::class, 'store'])->name('user.post.store');
+//});
+
 // Pelamar hanya bisa akses pelamar
-Route::middleware(['auth', 'role:pelamar'])->group(function () {
-    Route::get('/pelamar', [App\Http\Controllers\FrontController::class, 'pelamar'])->name('pelamar');
-});
+// Route::middleware(['auth', 'role:pelamar'])->group(function () {
+   // Route::get('/pelamar', [App\Http\Controllers\FrontController::class, 'pelamar'])->name('pelamar');
+//});
+
+// Route::group(['prefix' => 'petugas', 'middleware' => ['auth', isPerusahaan::class]], function () {
+//     Route::get('', [App\Http\Controllers\PerusahaanController::class, 'index'])->name('perusahaandashboard');
+//     Route::get('/jobPost', [App\Http\Controllers\FrontController::class, 'jobPost'])->name('jobPost');
+// });
+
 
 Auth::routes(); // Menonaktifkan route registrasi
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::group(['prefix' => 'admin', 'middleware' => ['auth', IsAdmin::class]], function () {
+Route::group(['prefix' => 'admin', 'middleware' => ['auth', isAdmin::class]], function () {
     Route::get('/', function () {
         return view('admin.index');
     });

@@ -1,94 +1,95 @@
-@extends('layouts.home')
+@extends('layouts.perusahaan')
 @section('content')
-    <style>
-        .form-container {
-            max-width: 2000px;
-            margin: auto;
-            padding: 30px;
-            background: #fff;
-            border-radius: 12px;
-            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
-        }
+<style>
+    .form-container {
+        max-width: 2000px;
+        margin: auto;
+        padding: 30px;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+    }
 
-        .step-indicator {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 30px;
-        }
+    .step-indicator {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 30px;
+    }
 
-        .step {
-            width: 33%;
-            text-align: center;
-            font-weight: bold;
-            color: #999;
-            padding-bottom: 12px;
-            border-bottom: 4px solid #ddd;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
+    .step {
+        width: 33%;
+        text-align: center;
+        font-weight: bold;
+        color: #999;
+        padding-bottom: 12px;
+        border-bottom: 4px solid #ddd;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
 
-        .step i {
-            font-size: 20px;
-        }
+    .step i {
+        font-size: 20px;
+    }
 
-        .step.active {
-            color: #007bff;
-            border-bottom: 4px solid #007bff;
-        }
+    .step.active {
+        color: #007bff;
+        border-bottom: 4px solid #007bff;
+    }
 
-        .hidden {
-            display: none;
-        }
+    .hidden {
+        display: none;
+    }
 
-        .form-control,
-        .form-select {
-            border-radius: 10px;
-            padding: 14px;
-            border: 1px solid #ced4da;
-            transition: all 0.3s ease-in-out;
-            font-size: 16px;
-        }
+    .form-control,
+    .form-select {
+        border-radius: 10px;
+        padding: 14px;
+        border: 1px solid #ced4da;
+        transition: all 0.3s ease-in-out;
+        font-size: 16px;
+        min-height: 52px;
+    }
 
-        .form-control:focus,
-        .form-select:focus {
-            border-color: #007bff;
-            box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
-            outline: none;
-        }
+    .form-control:focus,
+    .form-select:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+        outline: none;
+    }
 
-        .btn-next {
-            background: #007bff;
-            color: #fff;
-            padding: 14px 24px;
-            border-radius: 10px;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-            transition: 0.3s;
-        }
+    .btn-next {
+        background: #007bff;
+        color: #fff;
+        padding: 14px 24px;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        transition: 0.3s;
+    }
 
-        .btn-next:hover {
-            background: #0056b3;
-        }
+    .btn-next:hover {
+        background: #0056b3;
+    }
 
-        .btn-logout {
-            background: #dc3545;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 10px;
-            border: none;
-            font-size: 16px;
-            cursor: pointer;
-            margin-bottom: 20px;
-            transition: 0.3s;
-        }
+    .btn-logout {
+        background: #dc3545;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 10px;
+        border: none;
+        font-size: 16px;
+        cursor: pointer;
+        margin-bottom: 20px;
+        transition: 0.3s;
+    }
 
-        .btn-logout:hover {
-            background: #c82333;
-        }
-    </style>
+    .btn-logout:hover {
+        background: #c82333;
+    }
+</style>
 
     <section>
         <div class="container mt-5">
@@ -197,11 +198,16 @@
 
                         <div class="mb-3">
                             <label class="form-label">Gaji (Rp)</label>
-                            <input type="text" class="form-control" name="rentang_gaji" placeholder="Gaji yang ditawarkan" required />
-                        </div>
+                            <input type="number" class="form-control @error('rentang_gaji') is-invalid @enderror" name="rentang_gaji"
+                            placeholder="rentang_gaji" required />
+                        @error('rentang_gaji')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror                        </div>
 
                         <div class="mb-3">
-                            <select class="form-select" name="lokasi" required>
+                            <select class="form-select" name="id_lokasi" required>
                                 <option value="">Pilih Provinsi</option>
                                 @foreach (App\Models\Lokasi::all() as $data)
                                     <option value="{{ $data->id }}">{{ $data->lokasi }}</option>
@@ -263,28 +269,31 @@
         }
 
         function submitStep1() {
-            const form = document.getElementById('form1');
-            const formData = new FormData(form);
+    const form = document.getElementById('form1');
+    const formData = new FormData(form);
 
-            fetch(form.action, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.perusahaan_id) {
-                    document.querySelector('input[name="id_perusahaan"]').value = data.perusahaan_id;
-                    nextStep(2);
-                }
-            })
-            .catch(error => {
-                console.error(error);
-                alert("Terjadi kesalahan saat menyimpan. Coba lagi.");
-            });
+    fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
         }
+    })
+    .then(response => {
+        if (response.ok) {
+            // Ambil ID perusahaan dari session atau hidden input
+            // Asumsikan ID sudah disimpan di session oleh controller
+            nextStep(2); // lanjut ke Step 2
+        } else {
+            alert("Gagal menyimpan data perusahaan.");
+        }
+    })
+    .catch(error => {
+        console.error(error);
+        alert("Terjadi kesalahan saat menyimpan. Coba lagi.");
+    });
+}
+
     </script>
 
 @endsection

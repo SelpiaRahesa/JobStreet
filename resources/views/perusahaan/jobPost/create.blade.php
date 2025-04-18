@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.perusahaan')
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -9,14 +9,14 @@
                         {{ __('Add Lokasi') }}
                     </div>
                     <div class="float-end">
-                        <a href="{{route('jobPost.index')}}" class="btn btn-sm btn-primary">
+                        <a href="{{route('perusahaan.jobPost.index')}}" class="btn btn-sm btn-primary">
                             Back
                         </a>
                     </div>
                 </div>
 
                 <div class="card-body">
-                    <form id="form1" class="step-form" action="{{ route('user.perusahaan.store') }}" method="POST" enctype="multipart/form-data">
+                    <form id="form1" class="step-form" action="{{ route('perusahaan.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div id="step1">
                             <div class="mb-3">
@@ -69,7 +69,7 @@
                         </div>
                     </form>
 
-                    <form id="form2" class="step-form hidden" action="{{ route('user.post.store') }}" method="POST"
+                    <form id="form2" class="step-form hidden" action="{{ route('perusahaan.jobPost.store') }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
                         <div id="step2">
@@ -124,7 +124,7 @@
                     </form>
 
                     <!-- Step 3 Dipisah dari Step 2 -->
-                    <form id="form3" class="step-form hidden" action="{{ route('user.post.store') }}" method="POST">
+                    <form id="form3" class="step-form hidden" action="{{ route('perusahaan.jobPost.store') }}" method="POST">
                         @csrf
                         <div id="step3">
                             <div class="mb-4">
