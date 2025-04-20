@@ -35,20 +35,50 @@
                                     <td>{{ $job->judul }}</td>
                                     <td>{{ $job->perusahaan->nama_perusahaan }}</td>
                                     <td>{{ $job->bidang->nama_bidang }}</td>
-                                    <td>{{ $job->jenisPekerjaan->jenis }}</td>
+                                    <td>{{ $job->jenisPekerjaan->jenis_pekerjaan }}</td>
                                     <td>Rp {{ number_format($job->rentang_gaji, 0, ',', '.') }}</td>
-                                    <td>{{ $job->lokasi->nama_lokasi }}</td>
+                                    <td>{{ $job->lokasi->lokasi }}</td>
                                     <td>{{ Str::limit($job->deskripsi, 50) }}</td>
                                     <td>{{ Str::limit($job->kualifikasi, 50) }}</td>
                                     <td>
-                                        <form action="{{ route('admin.job_postings.updateStatus', $job->id) }}" method="POST">
+                                        <form action="{{ route('jobPost.updateStatus', $job->id) }}" method="POST">
                                             @csrf
                                             @method('PATCH')
-                                            <button type="submit" class="btn btn-sm {{ $job->status ? 'btn-success' : 'btn-warning' }}">
-                                                {{ $job->status ? 'Diterima' : 'Belum Diterima' }}
-                                            </button>
+
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-sm
+                                                    {{ $job->status == 0 ? 'btn-warning' : ($job->status == 1 ? 'btn-success' : 'btn-danger') }}
+                                                    dropdown-toggle text-white" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    @if ($job->status == 0)
+                                                        <i class="fa fa-clock"></i> Menunggu
+                                                    @elseif ($job->status == 1)
+                                                        <i class="fa fa-check-circle"></i> Diterima
+                                                    @else
+                                                        <i class="fa fa-times-circle"></i> Ditolak
+                                                    @endif
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li>
+                                                        <button type="submit" name="status" value="0" class="dropdown-item">
+                                                            <i class="fa fa-clock text-warning"></i> Menunggu
+                                                        </button>
+                                                    </li>
+                                                    <li>
+                                                        <button type="submit" name="status" value="1" class="dropdown-item">
+                                                            <i class="fa fa-check-circle text-success"></i> Diterima
+                                                        </button>
+                                                    </li>
+                                                    <li>
+                                                        <button type="submit" name="status" value="2" class="dropdown-item">
+                                                            <i class="fa fa-times-circle text-danger"></i> Ditolak
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </form>
                                     </td>
+
+
                                 </tr>
                                 @empty
                                 <tr>

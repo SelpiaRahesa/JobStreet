@@ -9,5 +9,15 @@ class Perusahaan extends Model
 {
     use HasFactory;
 
-  
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id_user');
+    }
+
+    public function jobPostings()
+{
+    return $this->hasMany(Job_posting::class, 'id_perusahaan');
+}
+
+
 }

@@ -16,10 +16,10 @@ class PerusahaanController extends Controller
      */
     public function index()
     {
-        $perusahaan = Perusahaan::all();
-        $user = User::all();
-        confirmDelete("Delete", "Are you sure you want to delete?");
-        return view('admin.perusahaan.index', compact('perusahaan', 'user'));
+        // $perusahaan = Perusahaan::all();
+        // $user = User::all();
+        // confirmDelete("Delete", "Are you sure you want to delete?");
+        // return view('perusahaan.perusahaan.index', compact('perusahaan', 'user'));
     }
 
     /**
@@ -27,7 +27,7 @@ class PerusahaanController extends Controller
      */
     public function create()
     {
-        //
+        return view('perusahaan.perusahaan.create');
     }
 
     /**
@@ -50,13 +50,14 @@ class PerusahaanController extends Controller
             $perusahaan->email =$request->email;
             $perusahaan->telepon =$request->telepon;
             $perusahaan->alamat =$request->alamat;
+            $perusahaan->id_user = auth()->id();
             // upload image
             $image = $request->file('image');
             $image->storeAs('public/perusahaans', $image->hashName());
             $perusahaan->image = $image->hashName();
             $perusahaan->save();
             Alert::success('Success', 'Data Added Successfully')->autoClose(1000);
-            return redirect()->route('jobPost');
+            return redirect()->route('perusahaan.jobPost.create');
 
 
     }

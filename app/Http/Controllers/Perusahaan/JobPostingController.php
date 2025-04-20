@@ -9,6 +9,7 @@ use App\Models\Perusahaan;
 use App\Models\Bidang;
 use App\Models\Jenis_pekerjaan;
 use App\Models\Lokasi;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class JobPostingController extends Controller
 {
@@ -20,6 +21,7 @@ class JobPostingController extends Controller
     public function index()
     {
         $jobPosting = Job_posting::with(['perusahaan', 'bidang', 'jenisPekerjaan', 'lokasi'])->get();
+        confirmDelete("Delete", "Are you sure you want to delete?");
         return view('perusahaan.jobPost.index', compact('jobPosting'));
     }
 
@@ -29,13 +31,18 @@ class JobPostingController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-{
-    $bidangs = Bidang::all();
-    $jenisPekerjaan = Jenis_pekerjaan::all();
-    $lokasis = Lokasi::all();
+    {
+        $bidangs = Bidang::all();
+        $jenisPekerjaan = Jenis_pekerjaan::all();
+        $lokasis = Lokasi::all();
 
-    return view('perusahaan.jobPost.create', compact('bidangs', 'jenisPekerjaan', 'lokasis'));
-}
+        // Ambil data perusahaan berdasarkan user yang login
+        $perusahaan = Perusahaan::where('id_user', auth()->id())->first();
+
+        return view('perusahaan.jobPost.create', compact('bidangs', 'jenisPekerjaan', 'lokasis', 'perusahaan'));
+    }
+
+
 
 
     /**
@@ -68,7 +75,7 @@ class JobPostingController extends Controller
     $jobPosting->kualifikasi = $request->kualifikasi;
     $jobPosting->status = false; // Default status ke false (belum diterima)
     $jobPosting->save();
-
+    Alert::success('Success', 'Job Posting created successfully')->autoClose(1000);
     return redirect()->route('perusahaan.jobPost.index');
 }
     /**

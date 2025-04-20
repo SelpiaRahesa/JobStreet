@@ -32,7 +32,7 @@
           </div>
         @else
           <div class="ps-lg-5">
-            <a href="{{ url('jobPost') }}" class="btn btn-lg btn-primary rounded-pill bg-gradient order-0">
+            <a href="{{ url('perusahaan/jobPost') }}" class="btn btn-lg btn-primary rounded-pill bg-gradient order-0">
               Untuk Perusahaan
             </a>
           </div>

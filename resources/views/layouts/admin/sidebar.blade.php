@@ -65,6 +65,12 @@
                                 <p>Job Vacancy</p>
                             </a> </li>
                     </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item"> <a href="{{ route('pelamar.index') }}" class="nav-link"> <i
+                                    class="nav-icon bi bi-clock-fill"></i>
+                                <p>pelamar</p>
+                            </a> </li>
+                    </ul>
 
                 </li>
             </ul> <!--end::Sidebar Menu-->

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Job_posting;
 
 class HomeController extends Controller
 {
@@ -34,5 +35,10 @@ class HomeController extends Controller
         }
 
         return redirect('/home');
+
+    $jobPost = Job_posting::where('status', 1)->latest()->get();
+    return view('home', compact('jobPost'));
     }
+
+
 }

@@ -28,13 +28,13 @@ class JobPostingController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-{
-    $bidangs = Bidang::all();
-    $jenisPekerjaan = Jenis_pekerjaan::all();
-    $lokasis = Lokasi::all();
+    {
+        $bidangs = Bidang::all();
+        $jenisPekerjaan = Jenis_pekerjaan::all();
+        $lokasis = Lokasi::all();
 
-    return view('admin.jobPost.create', compact('bidangs', 'jenisPekerjaan', 'lokasis'));
-}
+        return view('admin.jobPost.create', compact('bidangs', 'jenisPekerjaan', 'lokasis'));
+    }
 
 
     /**
@@ -44,42 +44,63 @@ class JobPostingController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-{
-    $request->validate([
-        'id_perusahaan' => 'required|exists:perusahaans,id',
-        'judul' => 'required|string|max:255',
-        'id_bidang' => 'required|exists:bidangs,id',
-        'id_jenis' => 'required|exists:jenis_pekerjaans,id',
-        'rentang_gaji' => 'required|integer',
-        'id_lokasi' => 'required|exists:lokasis,id',
-        'deskripsi' => 'required|string',
-        'kualifikasi' => 'required|string',
-    ]);
+    {
+        $request->validate([
+            'judul' => 'required|string|max:255',
+            'id_bidang' => 'required|exists:bidangs,id',
+            'id_jenis' => 'required|exists:jenis_pekerjaans,id',
+            'rentang_gaji' => 'required|integer',
+            'id_lokasi' => 'required|exists:lokasis,id',
+            'deskripsi' => 'required|string',
+            'kualifikasi' => 'required|string',
+        ]);
 
-    $jobPosting = new Job_posting();
-    $jobPosting->id_perusahaan = $request->id_perusahaan;
-    $jobPosting->judul = $request->judul;
-    $jobPosting->id_bidang = $request->id_bidang;
-    $jobPosting->id_jenis = $request->id_jenis;
-    $jobPosting->rentang_gaji = $request->rentang_gaji;
-    $jobPosting->id_lokasi = $request->id_lokasi;
-    $jobPosting->deskripsi = $request->deskripsi;
-    $jobPosting->kualifikasi = $request->kualifikasi;
-    $jobPosting->status = false; // Default status ke false (belum diterima)
-    $jobPosting->save();
+        // Ambil perusahaan berdasarkan user login
+        $perusahaan = Perusahaan::where('id_user', auth()->id())->first();
 
-    return redirect()->route('admin.jobPost.index');
-}
+        if (!$perusahaan) {
+            return back()->with('error', 'Data perusahaan tidak ditemukan untuk user ini.');
+        }
+
+        dd(auth()->id(), $perusahaan);
+        $jobPosting = new Job_posting();
+        $jobPosting->id_perusahaan = $perusahaan->id; // ✅ Ambil dari user
+        $jobPosting->judul = $request->judul;
+        $jobPosting->id_bidang = $request->id_bidang;
+        $jobPosting->id_jenis = $request->id_jenis;
+        $jobPosting->rentang_gaji = $request->rentang_gaji;
+        $jobPosting->id_lokasi = $request->id_lokasi;
+        $jobPosting->deskripsi = $request->deskripsi;
+        $jobPosting->kualifikasi = $request->kualifikasi;
+        $jobPosting->status = false; // default pending
+        $jobPosting->save();
+
+        return redirect()->route('jobPost')->with('success', 'Lowongan berhasil dibuat!');
+    }
+
     /**
      * Display the specified resource.
      *
      * @param  \App\Models\Job_posting  $job_posting
      * @return \Illuminate\Http\Response
      */
-    public function show(Job_posting $job_posting)
+
+    public function show($id)
     {
-        //
+        $jobPosting = Job_posting::with(['perusahaan', 'lokasi', 'bidang'])
+            ->findOrFail($id);
+
+        return view('detailJob', compact('jobPosting'));
     }
+
+    public function detailJob($id)
+{
+    $jobPosting = Job_posting::with(['perusahaan', 'lokasi', 'bidang'])
+        ->findOrFail($id);
+
+    return view('detailJob', compact('jobPosting'));
+}
+
 
     /**
      * Show the form for editing the specified resource.
@@ -87,10 +108,7 @@ class JobPostingController extends Controller
      * @param  \App\Models\Job_posting  $job_posting
      * @return \Illuminate\Http\Response
      */
-    public function edit(Job_posting $job_posting)
-    {
-
-    }
+    public function edit(Job_posting $job_posting) {}
 
     /**
      * Update the specified resource in storage.
@@ -99,9 +117,31 @@ class JobPostingController extends Controller
      * @param  \App\Models\Job_posting  $job_posting
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Job_posting $job_posting)
+
+    // Method untuk update status job posting
+    public function updateStatus($id)
     {
+        $jobPosting = Job_posting::findOrFail($id);
+
+        // Cek status saat ini dan update sesuai dengan perubahan
+        if ($jobPosting->status == 0) {
+            // Jika statusnya pending, jadi diterima
+            $jobPosting->status = 1;
+        } elseif ($jobPosting->status == 1) {
+            // Jika statusnya diterima, jadi ditolak
+            $jobPosting->status = 2;
+        } else {
+            // Jika statusnya ditolak, jadi pending lagi
+            $jobPosting->status = 0;
+        }
+
+        $jobPosting->save();
+
+        return redirect()->route('admin.jobPost.index')->with('success', 'Status job posting berhasil diperbarui!');
     }
+
+
+    public function update(Request $request, Job_posting $job_posting) {}
 
     /**
      * Remove the specified resource from storage.

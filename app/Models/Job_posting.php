@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Job_posting extends Model
 {
+    const STATUS_PENDING = 0;
+    const STATUS_DITERIMA = 1;
+    const STATUS_DITOLAK = 2;
+
     use HasFactory;
 
     protected $fillable = [
@@ -21,8 +25,7 @@ class Job_posting extends Model
         'status',
     ];
 
-    public function perusahaan()
-    {
+    public function perusahaan() {
         return $this->belongsTo(Perusahaan::class, 'id_perusahaan');
     }
 
@@ -40,4 +43,5 @@ class Job_posting extends Model
     {
         return $this->belongsTo(Lokasi::class, 'id_lokasi');
     }
+
 }
