@@ -16,9 +16,9 @@
                     </a>
                 </li> --}}
                 <li class="nav-item menu-open"> <a href="{{ route('perusahaan.jobPost.index') }}" class="nav-link active"> <i
-                            class="nav-icon bi bi-person-vcard-fill"></i>
+                            class="nav-icon bi bi-building"></i>
                         <p>
-                           User Management
+                           Dashboard
                         </p>
                     </a>
                 </li>

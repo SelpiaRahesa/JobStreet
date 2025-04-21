@@ -19,7 +19,6 @@
                                     <th>ID</th>
                                     <th>Judul</th>
                                     <th>Perusahaan</th>
-                                    <th>Bidang</th>
                                     <th>Jenis Pekerjaan</th>
                                     <th>Rentang Gaji</th>
                                     <th>Lokasi</th>
@@ -34,12 +33,17 @@
                                     <td>{{ $job->id }}</td>
                                     <td>{{ $job->judul }}</td>
                                     <td>{{ $job->perusahaan->nama_perusahaan }}</td>
-                                    <td>{{ $job->bidang->nama_bidang }}</td>
                                     <td>{{ $job->jenisPekerjaan->jenis_pekerjaan }}</td>
                                     <td>Rp {{ number_format($job->rentang_gaji, 0, ',', '.') }}</td>
                                     <td>{{ $job->lokasi->lokasi }}</td>
-                                    <td>{{ Str::limit($job->deskripsi, 50) }}</td>
-                                    <td>{{ Str::limit($job->kualifikasi, 50) }}</td>
+                                    <td> <span class="message-preview" onclick="toggleMessage(this)"
+                                        data-full-message="{{ $job->deskripsi }}">
+                                        {{ \Illuminate\Support\Str::limit($job->deskripsi, 50, '...') }}
+                                    </span></td>
+                                    <td> <span class="message-preview" onclick="toggleMessage(this)"
+                                        data-full-message="{{ $job->kualifikasi }}">
+                                        {{ \Illuminate\Support\Str::limit($job->kualifikasi, 50, '...') }}
+                                    </span></td>
                                     <td>
                                         <form action="{{ route('jobPost.updateStatus', $job->id) }}" method="POST">
                                             @csrf
@@ -93,4 +97,14 @@
         </div>
     </div>
 </div>
+<script>
+    function toggleMessage(element) {
+        const fullMessage = element.getAttribute('data-full-message');
+        if (element.innerText.endsWith('...')) {
+            element.innerText = fullMessage;
+        } else {
+            element.innerText = fullMessage.substring(0, 50) + '...';
+        }
+    }
+</script>
 @endsection

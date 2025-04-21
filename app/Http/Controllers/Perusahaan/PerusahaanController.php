@@ -38,6 +38,7 @@ class PerusahaanController extends Controller
             // ADD perusahaan
             $this->validate( $request, [
                 'nama_perusahaan'=>'required',
+                'bidang'=>'required',
                 'email'=>'required',
                 'telepon'=>'required',
                 'alamat'=>'required',
@@ -47,6 +48,7 @@ class PerusahaanController extends Controller
             $perusahaan = new Perusahaan();
             // $perusahaan->id_user = $request->id_user;
             $perusahaan->nama_perusahaan =$request->nama_perusahaan;
+            $perusahaan->bidang =$request->bidang;
             $perusahaan->email =$request->email;
             $perusahaan->telepon =$request->telepon;
             $perusahaan->alamat =$request->alamat;

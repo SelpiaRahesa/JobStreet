@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\Pelamar;
-use App\Models\Bidang;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PelamarController extends Controller
 {
@@ -16,9 +16,7 @@ class PelamarController extends Controller
      */
     public function apply()
     {
-        // Mengambil data bidang pekerjaan untuk dropdown
-        $bidang = Bidang::all();
-        return view('pelamar', compact('bidang'));
+        return view('pelamar');
     }
 
     /**
@@ -39,8 +37,8 @@ class PelamarController extends Controller
      */
     public function create()
     {
-        $bidang = Bidang::all();  // Mengambil semua bidang untuk dropdown
-        return view('pelamar', compact('bidang'));
+
+        return view('pelamar');
     }
 
     /**
@@ -51,8 +49,8 @@ class PelamarController extends Controller
      */
     public function store(Request $request)
     {
-        // Validasi input
-        $request->validate([
+          // ADD Message
+          $this->validate( $request, [
             'nama' => 'required|string|max:255',
             'jenis_kelamin' => 'required',
             'telepon' => 'required|numeric',
@@ -61,26 +59,29 @@ class PelamarController extends Controller
             'kelebihan' => 'required|string',
             'pengalaman' => 'required|string',
             'posisi' => 'required|string',
-            'id_bidang' => 'required|exists:bidangs,id',
+            'cv' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048', // Validasi file CV
         ]);
 
-        // Menyimpan data pelamar
-        Pelamar::create([
-            'id_user' => Auth::id(),  // Mengambil ID pengguna yang sedang login
-            'nama' => $request->nama,
-            'jenis_kelamin' => $request->jenis_kelamin,
-            'telepon' => $request->telepon,
-            'alamat' => $request->alamat,
-            'pendidikan_terakhir' => $request->pendidikan_terakhir,
-            'kelebihan' => $request->kelebihan,
-            'pengalaman' => $request->pengalaman,
-            'posisi' => $request->posisi,
-            'id_bidang' => $request->id_bidang,
-        ]);
-
-        // Redirect ke halaman beranda setelah berhasil
-        return redirect()->route('home')->with('success', 'Lamaran berhasil dikirim!');
+        $pelamar = new Pelamar();
+        $pelamar->id_user= Auth::id(); // Menyimpan ID user yang login
+        $pelamar->nama =$request->nama;
+        $pelamar->jenis_kelamin =$request->jenis_kelamin;
+        $pelamar->telepon =$request->telepon;
+        $pelamar->alamat =$request->alamat;
+        $pelamar->pendidikan_terakhir =$request->pendidikan_terakhir;
+        $pelamar->kelebihan =$request->kelebihan;
+        $pelamar->pengalaman =$request->pengalaman;
+        $pelamar->posisi = $request->posisi;
+         // upload image
+         $cv = $request->file('cv');
+         $cv->storeAs('public/pelamars', $cv->hashName());
+         $pelamar->cv = $cv->hashName();
+        $pelamar->save();
+        Alert::success('Success', 'Message  Successfully')->autoClose(2000);
+        return redirect()->route('job');
     }
+
+
 
     /**
      * Menampilkan data pelamar yang dipilih.
@@ -101,8 +102,7 @@ class PelamarController extends Controller
      */
     public function edit(Pelamar $pelamar)
     {
-        // $bidang = Bidang::all();  // Mengambil semua bidang untuk dropdown
-        // return view('admin.pelamar.edit', compact('pelamar', 'bidang'));
+
     }
 
     /**
@@ -124,7 +124,7 @@ class PelamarController extends Controller
         //     'kelebihan' => 'required|string',
         //     'pengalaman' => 'required|string',
         //     'posisi' => 'required|string',
-        //     'id_bidang' => 'required|exists:bidangs,id',
+        //
         // ]);
 
         // // Update data pelamar
@@ -137,7 +137,6 @@ class PelamarController extends Controller
         //     'kelebihan' => $request->kelebihan,
         //     'pengalaman' => $request->pengalaman,
         //     'posisi' => $request->posisi,
-        //     'id_bidang' => $request->id_bidang,
         // ]);
 
         // // Redirect ke halaman pelamar setelah update

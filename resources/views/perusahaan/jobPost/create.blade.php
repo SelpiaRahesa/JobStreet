@@ -20,16 +20,6 @@
         </div>
 
         <div class="mb-3">
-            <select name="id_bidang" class="form-select @error('id_bidang') is-invalid @enderror" required>
-                <option value="">Pilih Bidang</option>
-                @foreach (App\Models\Bidang::all() as $bidang)
-                    <option value="{{ $bidang->id }}">{{ $bidang->nama_bidang }}</option>
-                @endforeach
-            </select>
-            @error('id_bidang') <div class="invalid-feedback">{{ $message }}</div> @enderror
-        </div>
-
-        <div class="mb-3">
             <select name="id_jenis" class="form-select @error('id_jenis') is-invalid @enderror" required>
                 <option value="">Pilih Tipe Pekerjaan</option>
                 @foreach (App\Models\Jenis_pekerjaan::all() as $jenis)

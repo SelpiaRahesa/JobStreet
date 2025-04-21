@@ -11,4 +11,10 @@ class Pelamar extends Model
     protected $fillable = [
         'id_user', 'nama', 'jenis_kelamin', 'telepon', 'alamat', 'pendidikan_terakhir', 'kelebihan', 'pengalaman', 'posisi', 'id_bidang'
     ];
+
+     // Relasi dengan job_postings
+    // public function jobPostings()
+    // {
+    //     return $this->belongsTo(Job_posting::class, 'id_JobPost');
+    // }
 }

@@ -15,29 +15,19 @@
 
                 <div class="card-body">
                     @if ($jobPosting->count())
-                        <div class="table-responsive">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Judul</th>
-                                        <th>Jenis</th>
-                                        <th>Gaji</th>
-                                        <th>Lokasi</th>
-                                        <th>Tanggal</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($jobPosting as $item)
-                                        <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $item->judul }}</td>
-                                            <td>{{ $item->jenisPekerjaan->jenis_pekerjaan }}</td>
-                                            <td>Rp {{ number_format($item->rentang_gaji, 0, ',', '.') }}</td>
-                                            <td>{{ $item->lokasi->lokasi }}</td>
-                                            <td>{{ $item->created_at->format('d M Y') }}</td>
-                                            <td>
+                        <div class="row">
+                            @foreach($jobPosting as $item)
+                                <div class="col-md-6 col-lg-4 mb-4">
+                                    <div class="card shadow-sm border-0 h-100">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ $item->judul }}</h5>
+                                            <br>
+                                            <p class="mb-1"><strong>Jenis:</strong> {{ $item->jenisPekerjaan->jenis_pekerjaan }}</p>
+                                            <p class="mb-1"><strong>Gaji:</strong> Rp {{ number_format($item->rentang_gaji, 0, ',', '.') }}</p>
+                                            <p class="mb-1"><strong>Lokasi:</strong> {{ $item->lokasi->lokasi }}</p>
+                                            <p class="mb-1"><strong>Tanggal:</strong> {{ $item->created_at->format('d M Y') }}</p>
+                                            <p class="mb-0">
+                                                <strong>Status:</strong>
                                                 @if ($item->status == 1)
                                                     <span class="badge bg-success"><i class="bi bi-check-circle-fill"></i> Diterima</span>
                                                 @elseif ($item->status == 2)
@@ -45,16 +35,17 @@
                                                 @else
                                                     <span class="badge bg-warning text-dark"><i class="bi bi-clock-fill"></i> Menunggu</span>
                                                 @endif
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
                     @else
                         <p class="text-center">Belum ada lowongan kerja yang dibuat.</p>
                     @endif
                 </div>
+
             </div>
         </div>
     </div>

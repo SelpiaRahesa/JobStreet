@@ -24,10 +24,12 @@ return new class extends Migration
             $table->text('kelebihan');
             $table->text('pengalaman');
             $table->string('posisi');
-            $table->unsignedBigInteger('id_bidang');
+            $table->string('cv');
+            // $table->unsignedBigInteger('id_jobPost');  // Kolom untuk relasi dengan job_postings
             $table->timestamps();
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('id_bidang')->references('id')->on('bidangs')->onDelete('cascade');
+            // $table->foreign('id_jobPost')->references('id')->on('job_postings')->onDelete('cascade');  // Relasi dengan job_postings
+
         });
     }
 

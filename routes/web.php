@@ -36,7 +36,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', isAdmin::class]], fu
     Route::patch('/admin/job_postings/{jobPosting}/updateStatus', [App\Http\Controllers\JobPostingController::class, 'updateStatus'])->name('admin.job_postings.updateStatus');
     Route::get('/admin/jobPost', [App\Http\Controllers\JobPostingController::class, 'index'])->name('admin.jobPost.index');
     Route::patch('/jobPost/{id}/status', [App\Http\Controllers\JobPostingController::class, 'updateStatus'])->name('jobPost.updateStatus');
-
 });
 
 // Route user (Frontend)
@@ -49,15 +48,22 @@ Route::get('job', [App\Http\Controllers\FrontController::class, 'job'])->name('j
 Route::get('/job/{id}', [App\Http\Controllers\FrontController::class, 'show'])->name('job.show');
 Route::get('detailJob/{id}', [App\Http\Controllers\FrontController::class, 'detailJob'])->name('detailJob');
 
-Route::group(['prefix' => 'perusahaan', 'middleware' => ['auth', isPerusahaan::class]], function () {
-        Route::resource('jobPost', App\Http\Controllers\Perusahaan\JobPostingController::class, ['as' => 'perusahaan']);
-        Route::resource('perusahaan', App\Http\Controllers\Perusahaan\PerusahaanController::class, ['as' => 'perusahaan']);
-    // Route::get('', [App\Http\Controllers\Perusahaan\PerusahaanController::class, 'index'])->name('perusahaanindex');
-    // Route::resource('jobPost', App\Http\Controllers\Perusahaan\JobPostingController::class, ['as' => 'perusahaan']);
+// Route::group(['prefix' => 'perusahaan', 'middleware' => ['auth', isPerusahaan::class]], function () {
+//     Route::resource('jobPost', App\Http\Controllers\Perusahaan\JobPostingController::class, ['as' => 'perusahaan']);
+//     Route::resource('perusahaan', App\Http\Controllers\Perusahaan\PerusahaanController::class, ['as' => 'perusahaan']);
+//     Route::get('', [App\Http\Controllers\Perusahaan\PerusahaanController::class, 'index'])->name('perusahaanindex');
+//     Route::resource('jobPost', App\Http\Controllers\Perusahaan\JobPostingController::class, ['as' => 'perusahaan']);
+// });
+
+Route::group(['prefix' => 'perusahaan'], function () {
+    Route::resource('jobPost', App\Http\Controllers\Perusahaan\JobPostingController::class, ['as' => 'perusahaan']);
+    Route::resource('perusahaan', App\Http\Controllers\Perusahaan\PerusahaanController::class, ['as' => 'perusahaan']);
 });
+
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/pelamar', [PelamarController::class, 'apply'])->name('pelamar');
+    Route::post('/pelamar/store', [PelamarController::class, 'store'])->name('pelamar.store');
     // Route::resource('pelamar', PelamarController::class);
 });
 

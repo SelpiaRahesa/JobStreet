@@ -1,27 +1,25 @@
 @extends('layouts.home')
 
 @section('content')
-    <!-- Tambah FontAwesome -->
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
     <style>
         .form-container {
             max-width: 2000px;
+            /* semula 800px */
             margin: auto;
-            padding: 20px;
+            padding: 30px;
             background: #fff;
-            border-radius: 12px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
         }
 
-        .form-select {
-            height: 50px;
-        }
 
         .step-indicator {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
         .step {
@@ -31,10 +29,7 @@
             color: #999;
             padding-bottom: 10px;
             border-bottom: 3px solid #ddd;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+            transition: 0.3s;
         }
 
         .step.active {
@@ -42,36 +37,82 @@
             border-bottom: 3px solid #007bff;
         }
 
-        .hidden {
+        .form-section {
             display: none;
         }
 
-        .form-control,
-        .form-select {
-            border-radius: 8px;
+        .form-section.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: 500;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
             padding: 12px;
             border: 1px solid #ced4da;
-        }
-
-        .form-control:focus,
-        .form-select:focus {
-            border-color: #007bff;
-            box-shadow: 0 0 6px rgba(0, 123, 255, 0.3);
-            outline: none;
-        }
-
-        .btn-next {
-            background: #007bff;
-            color: #fff;
-            padding: 12px 20px;
             border-radius: 8px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 6px rgba(0, 123, 255, 0.3);
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 12px 24px;
             border: none;
+            border-radius: 8px;
             cursor: pointer;
             transition: 0.3s;
         }
 
+        .btn-next {
+            background: #007bff;
+            color: white;
+        }
+
         .btn-next:hover {
             background: #0056b3;
+        }
+
+        .btn-back {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-back:hover {
+            background: #495057;
+        }
+
+        .btn-submit {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-submit:hover {
+            background: #218838;
         }
     </style>
 
@@ -80,87 +121,137 @@
             <div class="form-container">
                 <h3 class="text-center mb-4">LAMAR PEKERJAAN</h3>
 
-                <div class="step1">
-                    <div class="step active" id="step1">
-                        <i class="fa fa-user"></i> Data Diri
-                    </div>
-                    <div class="step" id="step2">
-                        <i class="fa fa-briefcase"></i> Pekerjaan Dilamar
-                    </div>
-                    <div class="step" id="step3">
-                        <i class="fa fa-upload"></i> Upload CV
-                    </div>
+                <div class="step-indicator">
+                    <div class="step active" id="indicator-1"><i class="fa fa-user"></i> Data Diri</div>
+                    <div class="step" id="indicator-2"><i class="fa fa-briefcase"></i> Motivasi</div>
+                    <div class="step" id="indicator-3"><i class="fa fa-upload"></i> Pekerjaan</div>
                 </div>
 
-                <form action="{{ route('pelamar.store') }}" method="POST">
+                <form action="{{ route('pelamar.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
+                    <!-- STEP 1 -->
+                    <div class="form-section active" id="step-1">
+                        <div class="form-group">
+                            <label>Nama:</label>
+                            <input type="text" name="nama" required>
+                        </div>
 
-                    <!-- STEP 1: Data Diri -->
-                    <div id="step-1">
-                        <label>Nama:</label>
-                        <input type="text" name="nama" required>
+                        <div class="form-group">
+                            <label>Jenis Kelamin:</label>
+                            <select name="jenis_kelamin" required>
+                                <option value="">-- Pilih --</option>
+                                <option value="Laki-laki">Laki-laki</option>
+                                <option value="Perempuan">Perempuan</option>
+                            </select>
+                        </div>
 
-                        <label>Jenis Kelamin:</label>
-                        <select name="jenis_kelamin" required>
-                            <option value="Laki-laki">Laki-laki</option>
-                            <option value="Perempuan">Perempuan</option>
-                        </select>
+                        <div class="form-group">
+                            <label>Telepon:</label>
+                            <input type="number" name="telepon" required>
+                        </div>
 
-                        <label>Telepon:</label>
-                        <input type="number" name="telepon" required>
+                        <div class="form-group">
+                            <label>Alamat:</label>
+                            <textarea name="alamat" required></textarea>
+                        </div>
 
-                        <label>Alamat:</label>
-                        <textarea name="alamat" required></textarea>
+                        <div class="form-group">
+                            <label>Pendidikan Terakhir:</label>
+                            <input type="text" name="pendidikan_terakhir" required>
+                        </div>
 
-                        <label>Pendidikan Terakhir:</label>
-                        <input type="text" name="pendidikan_terakhir" required>
-
-                        <!-- Menambahkan id_user hidden input -->
                         <input type="hidden" name="id_user" value="{{ auth()->user()->id }}">
 
-                        <button type="button" onclick="nextStep(2)">Lanjut</button>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-next" onclick="nextStep(2)">Lanjut</button>
+                        </div>
                     </div>
 
-                    <!-- STEP 2: Motivasi -->
-                    <div id="step-2" style="display:none;">
-                        <label>Kelebihan:</label>
-                        <textarea name="kelebihan" required></textarea>
+                    <!-- STEP 2 -->
+                    <div class="form-section" id="step-2">
+                        <div class="form-group">
+                            <label>Kelebihan:</label>
+                            <textarea name="kelebihan" required></textarea>
+                        </div>
 
-                        <label>Pengalaman:</label>
-                        <textarea name="pengalaman" required></textarea>
+                        <div class="form-group">
+                            <label>Pengalaman:</label>
+                            <textarea name="pengalaman" required></textarea>
+                        </div>
 
-                        <button type="button" onclick="nextStep(3)">Lanjut</button>
-                        <button type="button" onclick="nextStep(1)">Kembali</button>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-back" onclick="nextStep(1)">Kembali</button>
+                            <button type="button" class="btn btn-next" onclick="nextStep(3)">Lanjut</button>
+                        </div>
                     </div>
-
                     <!-- STEP 3: Pekerjaan -->
-                    <div id="step-3" style="display:none;">
-                        <label>Posisi yang Dilamar:</label>
-                        <input type="text" name="posisi" required>
+                    <div class="form-section" id="step-3">
+                        <div class="form-group">
+                            <label>Posisi yang Dilamar:</label>
+                            <input type="text" name="posisi" required>
+                        </div>
 
-                        <label>Bidang:</label>
-                        <select name="id_bidang" required>
-                            @php $bidang = App\Models\Bidang::orderBy('id', 'asc')->paginate(8); @endphp
-                            @foreach ($bidang as $item)
-                                <option value="{{ $item->id }}">{{ $item->nama_bidang }}</option>
-                            @endforeach
-                        </select>
 
-                        <button type="submit">Kirim Lamaran</button>
-                        <button type="button" onclick="nextStep(2)">Kembali</button>
+                        <!-- Field CV -->
+                        <div class="form-group">
+                            <label>Upload CV:</label>
+                            <input type="file" name="cv" accept="application/pdf,image/*" required>
+                        </div>
+
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-back" onclick="nextStep(2)">Kembali</button>
+                            <button type="button" class="btn btn-submit" onclick="submitForm(event)">Kirim Lamaran</button>
+                        </div>
                     </div>
-                </form>
-
-                <script>
-                    function nextStep(step) {
-                        document.getElementById('step-1').style.display = 'none';
-                        document.getElementById('step-2').style.display = 'none';
-                        document.getElementById('step-3').style.display = 'none';
-                        document.getElementById('step-' + step).style.display = 'block';
-                    }
-                </script>
 
             </div>
+            </form>
+
+            <script>
+                function nextStep(step) {
+                    const sections = document.querySelectorAll('.form-section');
+                    const indicators = document.querySelectorAll('.step');
+
+                    sections.forEach(s => s.classList.remove('active'));
+                    document.getElementById('step-' + step).classList.add('active');
+
+                    indicators.forEach(i => i.classList.remove('active'));
+                    document.getElementById('indicator-' + step).classList.add('active');
+                }
+
+               
+                    function submitForm(event) {
+                        event.preventDefault(); // Mencegah refresh halaman
+
+                        const form = event.target.closest('form'); // Mengambil elemen form
+
+                        // Mengirimkan form menggunakan AJAX
+                        const formData = new FormData(form);
+
+                        fetch(form.action, {
+                                method: 'POST',
+                                body: formData,
+                                headers: {
+                                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                                }
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    window.location.href = "{{ route('job') }}"; // Ganti dengan URL yang sesuai
+                                } else {
+                                    alert("Terjadi kesalahan. Silakan coba lagi.");
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                                alert("Terjadi kesalahan. Silakan coba lagi.");
+                            });
+                    }
+            </script>
+
+            </script>
+        </div>
         </div>
     </section>
 @endsection

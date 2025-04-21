@@ -11,6 +11,15 @@
         </div>
 
         <div class="mb-3">
+            <label for="bidang">Bidang</label>
+            <input type="text" name="bidang" class="form-control @error('bidang') is-invalid @enderror" value="{{ old('bidang') }}" required>
+            @error('bidang')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+
+
+        <div class="mb-3">
             <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="Email" required>
             @error('email') <div class="invalid-feedback">{{ $message }}</div> @enderror
         </div>

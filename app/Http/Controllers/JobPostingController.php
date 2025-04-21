@@ -18,7 +18,7 @@ class JobPostingController extends Controller
      */
     public function index()
     {
-        $jobPosting = Job_posting::with(['perusahaan', 'bidang', 'jenisPekerjaan', 'lokasi'])->get();
+        $jobPosting = Job_posting::with(['perusahaan', 'jenisPekerjaan', 'lokasi'])->get();
         return view('admin.jobPost.index', compact('jobPosting'));
     }
 
@@ -29,11 +29,10 @@ class JobPostingController extends Controller
      */
     public function create()
     {
-        $bidangs = Bidang::all();
         $jenisPekerjaan = Jenis_pekerjaan::all();
         $lokasis = Lokasi::all();
 
-        return view('admin.jobPost.create', compact('bidangs', 'jenisPekerjaan', 'lokasis'));
+        return view('admin.jobPost.create', compact( 'jenisPekerjaan', 'lokasis'));
     }
 
 
@@ -47,7 +46,6 @@ class JobPostingController extends Controller
     {
         $request->validate([
             'judul' => 'required|string|max:255',
-            'id_bidang' => 'required|exists:bidangs,id',
             'id_jenis' => 'required|exists:jenis_pekerjaans,id',
             'rentang_gaji' => 'required|integer',
             'id_lokasi' => 'required|exists:lokasis,id',
@@ -66,7 +64,6 @@ class JobPostingController extends Controller
         $jobPosting = new Job_posting();
         $jobPosting->id_perusahaan = $perusahaan->id; // ✅ Ambil dari user
         $jobPosting->judul = $request->judul;
-        $jobPosting->id_bidang = $request->id_bidang;
         $jobPosting->id_jenis = $request->id_jenis;
         $jobPosting->rentang_gaji = $request->rentang_gaji;
         $jobPosting->id_lokasi = $request->id_lokasi;
@@ -87,7 +84,7 @@ class JobPostingController extends Controller
 
     public function show($id)
     {
-        $jobPosting = Job_posting::with(['perusahaan', 'lokasi', 'bidang'])
+        $jobPosting = Job_posting::with(['perusahaan', 'lokasi'])
             ->findOrFail($id);
 
         return view('detailJob', compact('jobPosting'));
@@ -95,7 +92,7 @@ class JobPostingController extends Controller
 
     public function detailJob($id)
 {
-    $jobPosting = Job_posting::with(['perusahaan', 'lokasi', 'bidang'])
+    $jobPosting = Job_posting::with(['perusahaan', 'lokasi'])
         ->findOrFail($id);
 
     return view('detailJob', compact('jobPosting'));

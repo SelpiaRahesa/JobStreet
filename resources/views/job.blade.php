@@ -111,7 +111,7 @@
           @php
           use App\Models\Job_posting;
 
-          $jobPost = Job_posting::with('perusahaan','lokasi','bidang')
+          $jobPost = Job_posting::with('perusahaan','lokasi')
             ->where('status', Job_posting::STATUS_DITERIMA)
             // Jika ada search, filter judul
             ->when(request('search'), function($q) {

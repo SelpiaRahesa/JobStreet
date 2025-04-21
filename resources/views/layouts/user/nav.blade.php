@@ -32,9 +32,20 @@
           </div>
         @else
           <div class="ps-lg-5">
-            <a href="{{ url('perusahaan/jobPost') }}" class="btn btn-lg btn-primary rounded-pill bg-gradient order-0">
-              Untuk Perusahaan
+            @auth
+            <!-- Jika user sudah login, tampilkan tombol untuk perusahaan -->
+            @if (Auth::user()->role === 'perusahaan')
+                <a href="{{ url('perusahaan/jobPost') }}" class="btn btn-lg btn-primary rounded-pill bg-gradient order-0">
+                    Untuk Perusahaan
+                </a>
+            @endif
+        @else
+            <!-- Jika user belum login, tampilkan tombol yang mengarah ke login -->
+            <a href="{{ route('login') }}" class="btn btn-lg btn-primary rounded-pill bg-gradient order-0">
+                Untuk Perusahaan
             </a>
+        @endauth
+
           </div>
         @endauth
 
