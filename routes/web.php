@@ -58,6 +58,7 @@ Route::get('detailJob/{id}', [App\Http\Controllers\FrontController::class, 'deta
 Route::group(['prefix' => 'perusahaan'], function () {
     Route::resource('jobPost', App\Http\Controllers\Perusahaan\JobPostingController::class, ['as' => 'perusahaan']);
     Route::resource('perusahaan', App\Http\Controllers\Perusahaan\PerusahaanController::class, ['as' => 'perusahaan']);
+    Route::resource('pelamar', App\Http\Controllers\Perusahaan\PelamarController::class, ['as' => 'perusahaan']);
 });
 
 

@@ -11,8 +11,8 @@
         </div>
 
         <div class="mb-3">
-            <label for="bidang">Bidang</label>
-            <input type="text" name="bidang" class="form-control @error('bidang') is-invalid @enderror" value="{{ old('bidang') }}" required>
+
+            <input type="text" name="bidang" class="form-control @error('bidang') is-invalid @enderror" placeholder="Bidang"value="{{ old('bidang') }}" required>
             @error('bidang')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror

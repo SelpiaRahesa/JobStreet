@@ -19,7 +19,7 @@ class JobPostingController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {   
         $jobPosting = Job_posting::with(['perusahaan', 'jenisPekerjaan', 'lokasi'])->get();
         confirmDelete("Delete", "Are you sure you want to delete?");
         return view('perusahaan.jobPost.index', compact('jobPosting'));

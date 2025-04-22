@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.perusahaan')
 
 @section('content')
 <div class="container">
@@ -27,7 +27,6 @@
                                     <th>Posisi yang Dilamar</th>
                                     <th>Tanggal</th>
                                     <th>CV</th>  <!-- Kolom CV -->
-                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -56,11 +55,11 @@
                                         {{-- <a href="{{ route('pelamar.show', $pelamar->id) }}" class="btn btn-sm btn-info">Detail</a>
                                         <a href="{{ route('pelamar.edit', $pelamar->id) }}" class="btn btn-sm btn-warning">Edit</a> --}}
                                         {{-- Delete action --}}
-                                        <form action="{{ route('pelamar.destroy', $pelamar->id) }}" method="POST" style="display:inline;">
+                                        {{-- <form action="{{ route('pelamar.destroy', $pelamar->id) }}" method="POST" style="display:inline;">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus pelamar ini?')">Hapus</button>
-                                        </form>
+                                        </form> --}}
                                     </td>
                                 </tr>
                                 @endforeach

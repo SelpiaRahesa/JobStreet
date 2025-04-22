@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Perusahaan;
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\Pelamar;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
+use App\Http\Controllers\Controller;
 
 class PelamarController extends Controller
 {
@@ -20,14 +21,14 @@ class PelamarController extends Controller
     }
 
     /**
-     * Menampilkan daftar pelamar di halaman admin.
+     * Menampilkan daftar pelamar di halaman perusahaan.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
         $pelamar = Pelamar::all();  // Mendapatkan semua data pelamar
-        return view('admin.pelamar.index', compact('pelamar'));
+        return view('perusahaan.pelamar.index', compact('pelamar'));
     }
 
     /**
@@ -91,7 +92,7 @@ class PelamarController extends Controller
      */
     public function show(Pelamar $pelamar)
     {
-        // return view('admin.pelamar.show', compact('pelamar'));
+        // return view('perusahaan.pelamar.show', compact('pelamar'));
     }
 
     /**
@@ -140,7 +141,7 @@ class PelamarController extends Controller
         // ]);
 
         // // Redirect ke halaman pelamar setelah update
-        // return redirect()->route('admin.pelamar.index')->with('success', 'Data pelamar berhasil diperbarui!');
+        // return redirect()->route('perusahaan.pelamar.index')->with('success', 'Data pelamar berhasil diperbarui!');
     }
 
     /**
@@ -155,6 +156,6 @@ class PelamarController extends Controller
         $pelamar->delete();
 
         // Redirect ke halaman pelamar dengan pesan sukses
-        return redirect()->route('admin.pelamar.index')->with('success', 'Pelamar berhasil dihapus!');
+        return redirect()->route('perusahaan.pelamar.index')->with('success', 'Pelamar berhasil dihapus!');
     }
 }

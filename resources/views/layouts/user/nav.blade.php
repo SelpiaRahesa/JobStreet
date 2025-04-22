@@ -21,7 +21,7 @@
               {{ Auth::user()->name }}
             </button>
             <ul class="dropdown-menu" aria-labelledby="profileDropdown">
-              <li><a class="dropdown-item" href="#">Profil Saya</a></li>
+              <li><a class="dropdown-item" href="{{ route('perusahaan.jobPost.index') }}">Dashboard</a></li>
               <li>
                 <form method="POST" action="{{ route('logout') }}">
                   @csrf
